@@ -5,7 +5,29 @@ const app = express()
 
 app.use(express.json())
 
-app.use(morgan('tiny'))
+morgan.token('data', function (req) {
+    //const method = JSON.stringify(req.method)
+    //console.log(method)
+
+    // jos ei laiteta ehtoa tulostuu tyhjä objekti, kun dataa ei ole
+    const keys = Object.keys(req.body).length
+    if (keys > 0){
+        return JSON.stringify(req.body)
+    } else {
+        return
+    }
+})
+
+app.use(morgan(function (tokens, req, res) {
+    return [
+      tokens.method(req, res),
+      tokens.url(req, res),
+      tokens.status(req, res),
+      tokens.res(req, res, 'content-length'), '-',
+      tokens['response-time'](req, res), 'ms',
+      tokens.data(req)
+    ].join(' ')
+  }))
 
 let persons = [
       {
