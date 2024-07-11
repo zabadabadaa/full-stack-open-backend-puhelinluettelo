@@ -5,3 +5,15 @@ GET https://full-stack-open-backend-puhelinluettelo.onrender.com/api/persons
 
 ###
 https://full-stack-open-backend-puhelinluettelo.onrender.com/api/persons/1
+
+###
+POST https://full-stack-open-backend-puhelinluettelo.onrender.com/api/persons
+Content-Type: application/json
+
+{
+    "name": "Kari",
+    "number": "123456"
+}
+
+###
+DELETE https://full-stack-open-backend-puhelinluettelo.onrender.com/api/persons/4
