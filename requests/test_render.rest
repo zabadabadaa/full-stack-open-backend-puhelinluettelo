@@ -1,0 +1,7 @@
+GET https://full-stack-open-backend-puhelinluettelo.onrender.com/info
+
+###
+GET https://full-stack-open-backend-puhelinluettelo.onrender.com/api/persons
+
+###
+https://full-stack-open-backend-puhelinluettelo.onrender.com/api/persons/1
