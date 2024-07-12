@@ -1,6 +1,9 @@
+require('dotenv').config() //ympäristömuuttujien hallinta
 const express = require('express')
-const morgan = require('morgan')
+const morgan = require('morgan') //infoa konsoliin
 const cors = require('cors')
+
+const Person = require('./models/person') //Person on moduuli, joka määrittää yhteys tietokantaan
 
 const app = express()
 
@@ -8,9 +11,8 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static('dist'))
 
-morgan.token('data', function (req) {
-    //const method = JSON.stringify(req.method)
-    //console.log(method)
+morgan.token('data', function (req) { //omatekoinen token,
+    //tulostaa konsoliin tiedot, kun dataa postataan
 
     // jos ei laiteta ehtoa tulostuu tyhjä objekti, kun dataa ei ole
     const keys = Object.keys(req.body).length
@@ -22,6 +24,7 @@ morgan.token('data', function (req) {
 })
 
 app.use(morgan(function (tokens, req, res) {
+    //nämä tulostuvat aina http pyynnön yhteydessä konsoliin
     return [
       tokens.method(req, res),
       tokens.url(req, res),
@@ -55,9 +58,10 @@ let persons = [
       }
 ]
 
-  
 app.get('/api/persons', (request, response) => {
-    response.json(persons)
+    Person.find({}).then(persons => {
+        response.json(persons)
+    })
 })
 
 app.get('/info', (request, response) => {
@@ -131,7 +135,7 @@ app.post('/api/persons', (request, response) => {
     response.json(person)
 })
   
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
