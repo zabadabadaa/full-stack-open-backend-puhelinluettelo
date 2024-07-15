@@ -35,28 +35,6 @@ app.use(morgan(function (tokens, req, res) {
     ].join(' ')
   }))
 
-let persons = [
-      {
-        "name": "Arto Hellas",
-        "number": "040-123456",
-        "id": "1"
-      },
-      {
-        "name": "Ada Lovelace",
-        "number": "39-44-5323523",
-        "id": "2"
-      },
-      {
-        "name": "Dan Abramov",
-        "number": "12-43-234345",
-        "id": "3"
-      },
-      {
-        "name": "Mary Poppendieck",
-        "number": "39-23-6423666",
-        "id": "4"
-      }
-]
 
 app.get('/api/persons', (request, response) => {
     Person.find({}).then(persons => {
@@ -89,52 +67,22 @@ app.delete('/api/persons/:id', (request, response) => {
     response.status(204).end()
   })
 
- //https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range 
-const generateId = () => {
-    const min = 0 //included
-    const max = 1000000 //included
-    const id = Math.floor(Math.random() * (max-min+1)) + min // min=0 now!
-    return String(id)
-}
-
 
 app.post('/api/persons', (request, response) => {
     const body = request.body
-    //console.log(body.name)
+    console.log(body.name)
 
-    const name = request.body.name
-    const existingName = persons.find(person => person.name === name)
-    
-    //console.log(existingName)
-
-    if (existingName) {
-        return response.status(400).json({
-            error: 'name already in phonebook, use unique name',
-        })
-    }
-
-    if (!body.name) {
-        return response.status(400).json({
-            error: 'name missing',
-        })
-    }
-
-    if (!body.number) {
-        return response.status(400).json({
-            error: 'number missing',
-        })
-    }
-
-    const person = {
+    const person = new Person({
         name: body.name,
-        number: body.number || false,
-        id: generateId(),
-    }
-    persons = persons.concat(person)
+        number: body.number,
+      })
 
-    response.json(person)
+    person.save().then(result => {
+        console.log('person saved!')
+      })  
 })
-  
+
+
 const PORT = process.env.PORT
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
