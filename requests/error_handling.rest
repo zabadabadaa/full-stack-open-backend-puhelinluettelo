@@ -1,0 +1,10 @@
+DELETE http://localhost:3001/api/persons/5c41c90e84d891c15dfa3431
+
+### oikea
+GET http://localhost:3001/api/persons/6694d8840830f51058f87b0f
+
+### ei löydy
+GET http://localhost:3001/api/persons/6694d8840830f51058f87b0a
+
+### väärä muoto
+GET http://localhost:3001/api/persons/6694d884
