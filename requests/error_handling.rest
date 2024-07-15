@@ -1,6 +1,7 @@
-DELETE http://localhost:3001/api/persons/5c41c90e84d891c15dfa3431
+### poista väärä id
+DELETE http://localhost:3001/api/persons/668fe2b8cdebb131d34a0fes
 
-### oikea
+### oikea id get
 GET http://localhost:3001/api/persons/6694d8840830f51058f87b0f
 
 ### ei löydy
@@ -8,3 +9,12 @@ GET http://localhost:3001/api/persons/6694d8840830f51058f87b0a
 
 ### väärä muoto
 GET http://localhost:3001/api/persons/6694d884
+
+### liian lhyt nimi
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Ka",
+    "number": "123456"
+}
