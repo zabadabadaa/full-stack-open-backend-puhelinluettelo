@@ -22,9 +22,17 @@ const personSchema = new mongoose.Schema({
     type: String,
     minlength: 3,
     required: true
-
   },
-  number: String,
+  number: {
+    type: String,
+    minlength: 8,
+    required: true,
+    validate: {
+      validator: (v) => /^\d{2,3}-\d{5,}$/.test(v),
+      message: props => `${props.value} phone number must start with 2-3 numbers and then hyphen (-)`,
+    }
+  }
+
 })
 
 personSchema.set('toJSON', {
